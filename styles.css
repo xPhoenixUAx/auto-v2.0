@@ -20,6 +20,13 @@ body {
   background-color: var(--primary-bg);
   color: var(--text-color);
   line-height: 1.6;
+  cursor: none;
+}
+button,
+a,
+input,
+textarea {
+  cursor: none;
 }
 
 h1,
@@ -488,7 +495,9 @@ h2 {
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
 }
-
+select {
+  cursor: none;
+}
 .form-group label {
   position: absolute;
   top: 0.8rem;
@@ -527,7 +536,7 @@ h2 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  cursor: pointer;
+  cursor: none;
   transition: background-color 0.3s ease;
 }
 
