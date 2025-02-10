@@ -1,8 +1,3 @@
-import * as THREE from "three";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Howl } from "howler";
-
 gsap.registerPlugin(ScrollTrigger);
 
 // Custom cursor
@@ -38,13 +33,28 @@ menuToggle.addEventListener("click", () => {
   menuToggle.classList.toggle("active");
 });
 
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+    navLinks.classList.remove("active");
+    menuToggle.classList.remove("active");
+  }
+});
+
+// Close menu when a nav link is clicked
+navLinks.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("active");
+    menuToggle.classList.remove("active");
+  });
+});
+
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth",
-    });
+    const target = document.querySelector(this.getAttribute("href"));
+    gsap.to(window, { duration: 1, scrollTo: target });
   });
 });
 
@@ -79,10 +89,13 @@ function animate() {
 animate();
 
 // Parallax effect
-window.addEventListener("scroll", () => {
-  const scrolled = window.pageYOffset;
-  const parallax = document.querySelector(".hero-image");
-  parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+gsap.to(".hero-image", {
+  yPercent: 50,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero",
+    scrub: true,
+  },
 });
 
 // Vehicle showcase interaction
@@ -114,9 +127,9 @@ const vehicleData = {
     ],
   },
   sports: {
-    name: "Sports Coupe",
+    name: "Sports Car",
     description:
-      "Feel the thrill of the road with our high-performance sports coupe. Its aerodynamic design, powerful engine, and precision handling deliver an exhilarating driving experience that will leave you breathless.",
+      "Feel the thrill of the road with our high-performance sports car. Its aerodynamic design, powerful engine, and precision handling deliver an exhilarating driving experience that will leave you breathless.",
     specs: [
       { label: "0-60 mph", value: "3.2 sec" },
       { label: "Top Speed", value: "205 mph" },
@@ -151,105 +164,33 @@ vehicleItems.forEach((item) => {
 });
 
 // Reveal animations
-const revealElements = document.querySelectorAll(
-  ".service-item, .vehicle-item, .testimonial-item"
-);
-
-const revealOnScroll = () => {
-  revealElements.forEach((element) => {
-    const elementTop = element.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    if (elementTop < windowHeight - 100) {
-      element.classList.add("revealed");
-    }
+gsap.utils
+  .toArray(".vehicle-item, .service-item, .about, .contact-form")
+  .forEach((element) => {
+    gsap.fromTo(
+      element,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: element,
+          start: "top bottom-=100",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
   });
-};
-
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
-
-// Testimonial slider
-const testimonialSlider = document.querySelector(".testimonial-slider");
-let isDown = false;
-let startX;
-let scrollLeft;
-
-testimonialSlider.addEventListener("mousedown", (e) => {
-  isDown = true;
-  startX = e.pageX - testimonialSlider.offsetLeft;
-  scrollLeft = testimonialSlider.scrollLeft;
-});
-
-testimonialSlider.addEventListener("mouseleave", () => {
-  isDown = false;
-});
-
-testimonialSlider.addEventListener("mouseup", () => {
-  isDown = false;
-});
-
-testimonialSlider.addEventListener("mousemove", (e) => {
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - testimonialSlider.offsetLeft;
-  const walk = (x - startX) * 2;
-  testimonialSlider.scrollLeft = scrollLeft - walk;
-});
 
 // Form validation and submission
 const contactForm = document.getElementById("contact-form");
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  // Basic form validation
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const message = document.getElementById("message").value;
-
-  if (name.trim() === "" || email.trim() === "" || message.trim() === "") {
-    alert("Please fill in all fields");
-    return;
-  }
-
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert("Please enter a valid email address");
-    return;
-  }
-
-  // If validation passes, you can submit the form or perform further actions
-  alert("Form submitted successfully!");
+  // Add your form submission logic here
+  alert("Thank you for your message! We will get back to you shortly.");
   contactForm.reset();
-});
-
-// Add hover effect to service and vehicle items
-const hoverItems = document.querySelectorAll(".service-item, .vehicle-item");
-
-hoverItems.forEach((item) => {
-  item.addEventListener("mouseenter", () => {
-    item.style.transform = "translateY(-10px)";
-    item.style.boxShadow = "0 10px 20px rgba(255, 51, 51, 0.2)";
-  });
-
-  item.addEventListener("mouseleave", () => {
-    item.style.transform = "translateY(0)";
-    item.style.boxShadow = "none";
-  });
-});
-
-// Animate the hero content on page load
-window.addEventListener("load", () => {
-  const heroContent = document.querySelector(".hero-content");
-  heroContent.style.opacity = "0";
-  heroContent.style.transform = "translateY(50px)";
-
-  setTimeout(() => {
-    heroContent.style.transition = "opacity 1s ease, transform 1s ease";
-    heroContent.style.opacity = "1";
-    heroContent.style.transform = "translateY(0)";
-  }, 500);
 });
 
 // Resize handler
@@ -271,4 +212,134 @@ const clickSound = new Howl({
 document.querySelectorAll("a, button, .vehicle-item").forEach((element) => {
   element.addEventListener("mouseenter", () => hoverSound.play());
   element.addEventListener("click", () => clickSound.play());
+});
+
+// Testimonial carousel
+const testimonialSlider = document.querySelector(".testimonial-slider");
+const testimonials = document.querySelectorAll(".testimonial-item");
+let currentTestimonial = 0;
+
+function showTestimonial(index) {
+  testimonials.forEach((testimonial, i) => {
+    if (i === index) {
+      testimonial.style.opacity = 1;
+      testimonial.style.transform = "translateX(0)";
+    } else {
+      testimonial.style.opacity = 0;
+      testimonial.style.transform = "translateX(100%)";
+    }
+  });
+}
+
+function nextTestimonial() {
+  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+  showTestimonial(currentTestimonial);
+}
+
+function prevTestimonial() {
+  currentTestimonial =
+    (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+  showTestimonial(currentTestimonial);
+}
+
+// Auto-advance testimonials every 5 seconds
+setInterval(nextTestimonial, 5000);
+
+// Initialize the first testimonial
+showTestimonial(currentTestimonial);
+
+// Add navigation buttons
+const prevButton = document.createElement("button");
+prevButton.textContent = "❮";
+prevButton.classList.add("testimonial-nav", "prev");
+prevButton.addEventListener("click", prevTestimonial);
+
+const nextButton = document.createElement("button");
+nextButton.textContent = "❯";
+nextButton.classList.add("testimonial-nav", "next");
+nextButton.addEventListener("click", nextTestimonial);
+
+testimonialSlider.parentElement.appendChild(prevButton);
+testimonialSlider.parentElement.appendChild(nextButton);
+
+// Animate sections on scroll
+gsap.utils.toArray("section").forEach((section, index) => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top center",
+      end: "bottom center",
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  tl.from(section, {
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    ease: "power3.out",
+  });
+
+  if (index % 2 === 0) {
+    tl.from(
+      section.querySelectorAll("h2, p, .cta-button"),
+      {
+        x: -50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "power3.out",
+      },
+      "-=0.4"
+    );
+  } else {
+    tl.from(
+      section.querySelectorAll("h2, p, .cta-button"),
+      {
+        x: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "power3.out",
+      },
+      "-=0.4"
+    );
+  }
+});
+
+// Animate logo on page load
+gsap.from(".logo", {
+  opacity: 0,
+  y: -50,
+  duration: 1,
+  ease: "power3.out",
+  delay: 0.5,
+});
+
+// Animate nav links on page load
+gsap.from(".nav-links li", {
+  opacity: 0,
+  y: -20,
+  stagger: 0.1,
+  duration: 0.8,
+  ease: "power3.out",
+  delay: 0.8,
+});
+
+// Animate hero content on page load
+gsap.from(".hero-content", {
+  opacity: 0,
+  y: 50,
+  duration: 1,
+  ease: "power3.out",
+  delay: 1,
+});
+
+// Animate hero image on page load
+gsap.from(".hero-image", {
+  opacity: 0,
+  x: 100,
+  duration: 1.2,
+  ease: "power3.out",
+  delay: 1.2,
 });
