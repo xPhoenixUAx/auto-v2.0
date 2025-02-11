@@ -18,7 +18,9 @@ body {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
 }
-
+.back {
+  color: #ff3333;
+}
 .question {
   display: flex;
   justify-content: space-between;
