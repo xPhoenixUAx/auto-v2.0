@@ -174,11 +174,16 @@ gsap.utils
   });
 
 // Form validation and submission
+// Form validation and submission
 const contactForm = document.getElementById("contact-form");
+
 contactForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  // Add your form submission logic here
+  e.preventDefault(); // Prevents the default form submission (page reload)
+
+  // Here, you can add the logic for submitting the form, e.g., via AJAX or other methods.
   alert("Thank you for your message! We will get back to you shortly.");
+
+  // Optionally, reset the form after submission
   contactForm.reset();
 });
 
@@ -187,15 +192,6 @@ window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// Sound effects
-const hoverSound = new Howl({
-  src: ["hover.mp3"],
-});
-
-const clickSound = new Howl({
-  src: ["click.mp3"],
 });
 
 document.querySelectorAll("a, button, .vehicle-item").forEach((element) => {
