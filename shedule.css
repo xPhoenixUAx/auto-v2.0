@@ -5,7 +5,9 @@ body {
   color: #ff3333;
   padding: 40px 20px;
 }
-
+.back {
+  color: #ff3333;
+}
 .service-container {
   max-width: 800px;
   margin: 0 auto;

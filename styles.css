@@ -172,6 +172,7 @@ nav {
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin-top: 80px;
 }
 
 .hero p {
@@ -245,7 +246,7 @@ nav {
 
 .about-image {
   width: 100%;
-  height: 400px;
+  /* height: 400px; */
   background-image: url("/placeholder.svg?height=400&width=600&text=About+Us");
   background-size: cover;
   background-position: center;
@@ -253,7 +254,7 @@ nav {
 }
 
 .about-image-overlay {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   left: 0;
   right: 0;
@@ -435,9 +436,23 @@ h2 {
   padding: 2rem;
   background-color: var(--secondary-bg);
   border-radius: 10px;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
+}
+/* Адаптивність для екрану менше 768px (мобільні пристрої) */
+@media (max-width: 768px) {
+  .testimonial-item {
+    flex: 0 0 calc(50% - 1rem); /* Два елементи в ряд */
+    padding: 1.5rem; /* Зменшення відступів для компактнішого вигляду */
+  }
 }
 
+/* Адаптивність для екрану менше 480px (дуже маленькі екрани) */
+@media (max-width: 480px) {
+  .testimonial-item {
+    flex: 0 0 100%; /* Один елемент на весь ряд */
+    padding: 1rem; /* Далі зменшуємо відступи для дуже компактного вигляду */
+  }
+}
 .testimonial-item p {
   font-style: italic;
   margin-bottom: 1rem;
