@@ -12,21 +12,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-html {
-  scroll-behavior: smooth;
-}
+
 body {
   font-family: "Rajdhani", sans-serif;
   background-color: var(--primary-bg);
   color: var(--text-color);
   line-height: 1.6;
-  cursor: none;
-}
-button,
-a,
-input,
-textarea {
-  cursor: none;
 }
 
 h1,
@@ -36,6 +27,9 @@ h4,
 h5,
 h6 {
   font-family: "Orbitron", sans-serif;
+}
+html {
+  scroll-behavior: smooth;
 }
 #cursor {
   position: fixed;
@@ -47,6 +41,7 @@ h6 {
   z-index: 9999;
   transition: transform 0.2s ease;
 }
+
 #cursor-blur {
   position: fixed;
   width: 400px;
@@ -298,8 +293,8 @@ h2 {
 .service-grid,
 .vehicle-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
 }
 
 .service-item {
@@ -495,9 +490,7 @@ h2 {
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
 }
-select {
-  cursor: none;
-}
+
 .form-group label {
   position: absolute;
   top: 0.8rem;
@@ -536,7 +529,7 @@ select {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  cursor: none;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
@@ -637,10 +630,40 @@ footer {
 @media (max-width: 768px) {
   .nav-links {
     display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-bg);
+    padding: 1rem;
   }
-
+  .nav-links.active {
+    display: flex;
+  }
+  .nav-links li {
+    margin: 0.5rem 0;
+  }
   .menu-toggle {
     display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    margin: 3px 0;
+    transition: 0.4s;
+  }
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
   }
 
   .hero {

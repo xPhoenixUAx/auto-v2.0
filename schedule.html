@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./shedule.css" />
+  </head>
+  <body>
+    <section id="schedule-service">
+      <div class="service-container">
+        <h2>Schedule Your Service</h2>
+        <p>
+          Our expert technicians are here to help you maintain your vehicle.
+          Schedule a service appointment at your convenience and get your
+          vehicle back in top shape!
+        </p>
+
+        <form id="service-form">
+          <div class="form-group">
+            <label for="service-type">Choose a Service:</label>
+            <select id="service-type" required>
+              <option value="">Select a Service</option>
+              <option value="oil-change">Oil Change</option>
+              <option value="tire-rotation">Tire Rotation</option>
+              <option value="brake-inspection">Brake Inspection</option>
+              <option value="battery-check">Battery Check</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="service-date">Preferred Service Date:</label>
+            <input type="date" id="service-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="additional-info">Additional Information:</label>
+            <textarea
+              id="additional-info"
+              rows="4"
+              placeholder="Describe your issue or any special requests"
+            ></textarea>
+          </div>
+
+          <div class="cta">
+            <button type="submit">Schedule Service</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
