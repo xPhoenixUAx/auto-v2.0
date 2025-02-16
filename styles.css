@@ -773,16 +773,16 @@ footer {
 }
 
 .cookie-modal-content {
-  background-color: transparent;
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.6);
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 300px;
   width: 100%;
   color: white;
   box-sizing: border-box;
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .cookie-modal-content p {
@@ -809,18 +809,18 @@ footer {
 
 .submit-btn:hover {
   border: 1px solid;
-  border-color:green;
+  border-color: green;
   box-shadow: 0 4px 10px rgba(0, 255, 0, 0.7);
 }
 
 .decline-btn {
   background-color: transparent;
-  color:white;
+  color: white;
 }
 
 .decline-btn:hover {
   border: 1px solid;
-  border-color:red;
+  border-color: red;
   box-shadow: 0 4px 10px rgba(255, 0, 0, 0.7);
 }
 
